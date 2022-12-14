@@ -41,7 +41,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Exit
-        run: exit 1
+        run: exit 0
 
   apply-staging:
     if: |
