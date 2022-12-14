@@ -34,7 +34,6 @@ jobs:
 
   apply-dev:
     if: |
-      always() &&
       github.ref == 'refs/heads/main' &&
       needs.plan-dev.outputs.plan-exit-code == 2
     needs: [plan-dev, plan-staging, plan-prod]
