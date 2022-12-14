@@ -34,9 +34,9 @@ jobs:
 
   apply-dev:
     if: |
+      always() &&
       github.ref == 'refs/heads/main' &&
       needs.plan-dev.outputs.plan-exit-code == 2
-      (needs.apply-dev.result == 'success' || needs.apply-dev.result == 'skipped')
     needs: [plan-dev, plan-staging, plan-prod]
     runs-on: ubuntu-latest
     steps:
