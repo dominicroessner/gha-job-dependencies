@@ -22,7 +22,7 @@ jobs:
       plan-exit-code: "2"
     steps:
       - name: Exit
-        run: exit 1
+        run: exit 0
 
   plan-prod:
     runs-on: ubuntu-latest
@@ -30,7 +30,7 @@ jobs:
       plan-exit-code: "2"
     steps:
       - name: Exit
-        run: exit 1
+        run: exit 0
 
   apply-dev:
     if: |
@@ -56,7 +56,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Exit
-        run: exit 0
+        run: exit 1
 
   apply-prod:
     if: |
