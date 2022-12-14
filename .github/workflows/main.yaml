@@ -46,6 +46,7 @@ jobs:
     if: |
       always() &&
       github.ref == 'refs/heads/main' &&
+      needs.plan-staging.result == 'success' &&
       needs.plan-staging.outputs.plan-exit-code == 2 &&
       (needs.apply-dev.result == 'success' || needs.apply-dev.result == 'skipped')
     needs: [apply-dev]
@@ -58,6 +59,7 @@ jobs:
     if: |
       always() &&
       github.ref == 'refs/heads/main' &&
+      needs.plan-prod.result == 'success' &&
       needs.plan-prod.outputs.plan-exit-code == 2 &&
       (needs.apply-dev.result == 'success' || needs.apply-dev.result == 'skipped') &&
       (needs.apply-staging.result == 'success' || needs.apply-staging.result == 'skipped')
