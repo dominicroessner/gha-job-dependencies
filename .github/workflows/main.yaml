@@ -19,7 +19,7 @@ jobs:
   plan-staging:
     runs-on: ubuntu-latest
     outputs:
-      plan-exit-code: "2"
+      plan-exit-code: "0"
     steps:
       - name: Exit
         run: exit 0
