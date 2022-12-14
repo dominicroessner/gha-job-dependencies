@@ -22,7 +22,7 @@ jobs:
       plan-exit-code: "2"
     steps:
       - name: Exit
-        run: exit 1
+        run: exit 0
 
   plan-prod:
     runs-on: ubuntu-latest
