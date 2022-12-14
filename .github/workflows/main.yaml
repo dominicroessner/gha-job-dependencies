@@ -45,7 +45,7 @@ jobs:
 
   apply-staging:
     if: |
-      always() &&
+      failure() &&
       github.ref == 'refs/heads/main' &&
       needs.plan-staging.outputs.plan-exit-code == 2 &&
       (needs.apply-dev.result == 'success' || needs.apply-dev.result == 'skipped')
