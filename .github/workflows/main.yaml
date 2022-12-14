@@ -34,7 +34,7 @@ jobs:
 
   apply-dev:
     if: |
-      success() &&
+      always() &&
       github.ref == 'refs/heads/main' &&
       needs.plan-dev.outputs.plan-exit-code == 2
     needs: [plan-dev, plan-staging, plan-prod]
@@ -45,9 +45,10 @@ jobs:
 
   apply-staging:
     if: |
-      success() &&
+      always() &&
       github.ref == 'refs/heads/main' &&
-      needs.plan-staging.outputs.plan-exit-code == 2
+      needs.plan-staging.outputs.plan-exit-code == 2 &&
+      (needs.apply-dev.result == 'skipped' || needs.apply-dev.result == 'success')
     needs: [apply-dev]
     runs-on: ubuntu-latest
     steps:
@@ -56,9 +57,10 @@ jobs:
 
   apply-prod:
     if: |
-      success() &&
+      always() &&
       github.ref == 'refs/heads/main' &&
-      needs.plan-prod.outputs.plan-exit-code == 2
+      needs.plan-prod.outputs.plan-exit-code == 2 &&
+      (needs.apply-staging.result == 'skipped' || needs.apply-staging.result == 'success')
     needs: [apply-staging]
     runs-on: ubuntu-latest
     steps:
