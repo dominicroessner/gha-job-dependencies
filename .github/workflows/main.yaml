@@ -47,7 +47,6 @@ jobs:
       github.ref == 'refs/heads/main' &&
       needs.plan-staging.outputs.plan-exit-code == 2 &&
       (needs.apply-dev.result == 'skipped' || needs.plan-staging.result == 'success')
-    needs: [apply-dev]
     runs-on: ubuntu-latest
     steps:
       - name: Exit
@@ -58,7 +57,6 @@ jobs:
       github.ref == 'refs/heads/main' &&
       needs.plan-prod.outputs.plan-exit-code == 2 &&
       (needs.apply-staging.result == 'skipped' || needs.apply-staging.result == 'success')
-    needs: [apply-staging]
     runs-on: ubuntu-latest
     steps:
       - name: Exit
