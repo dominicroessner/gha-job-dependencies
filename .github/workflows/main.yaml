@@ -33,7 +33,7 @@ jobs:
         run: exit 0
 
   apply-dev:
-    if: always() && github.ref == 'refs/heads/main' && needs.plan-dev.outputs.plan-exit-code == 2
+    if: always() && github.ref == 'refs/heads/main' && needs.plan-dev.outputs.plan-exit-code == 2 && needs.plan-dev.result != 'failure'
     needs: [plan-dev, plan-staging, plan-prod]
     runs-on: ubuntu-latest
     steps:
@@ -41,7 +41,7 @@ jobs:
         run: exit 0
 
   apply-staging:
-    if: always() && github.ref == 'refs/heads/main' && needs.plan-staging.outputs.plan-exit-code == 2
+    if: always() && github.ref == 'refs/heads/main' && needs.plan-staging.outputs.plan-exit-code == 2 && needs.plan-staging.result != 'failure'
     needs: [plan-staging, apply-dev]
     runs-on: ubuntu-latest
     steps:
@@ -49,7 +49,7 @@ jobs:
         run: exit 0
 
   apply-prod:
-    if: always() && github.ref == 'refs/heads/main' && needs.plan-prod.outputs.plan-exit-code == 2
+    if: always() && github.ref == 'refs/heads/main' && needs.plan-prod.outputs.plan-exit-code == 2 && needs.plan-prod.result != 'failure'
     needs: [plan-prod, apply-staging]
     runs-on: ubuntu-latest
     steps:
