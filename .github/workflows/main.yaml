@@ -46,8 +46,12 @@ jobs:
     if: |
       always() &&
       github.ref == 'refs/heads/main' &&
-      needs.plan-staging.result == 'success' &&
       needs.plan-staging.outputs.plan-exit-code == 2 &&
+
+      needs.plan-dev.result == 'success' &&
+      needs.plan-staging.result == 'success' &&
+      needs.plan-prod.result == 'success' &&
+
       (needs.apply-dev.result == 'success' || needs.apply-dev.result == 'skipped')
     needs: [apply-dev]
     runs-on: ubuntu-latest
@@ -59,8 +63,12 @@ jobs:
     if: |
       always() &&
       github.ref == 'refs/heads/main' &&
-      needs.plan-prod.result == 'success' &&
       needs.plan-prod.outputs.plan-exit-code == 2 &&
+
+      needs.plan-dev.result == 'success' &&
+      needs.plan-staging.result == 'success' &&
+      needs.plan-prod.result == 'success' &&
+
       (needs.apply-dev.result == 'success' || needs.apply-dev.result == 'skipped') &&
       (needs.apply-staging.result == 'success' || needs.apply-staging.result == 'skipped')
     needs: [apply-staging]
