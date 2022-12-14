@@ -1,0 +1,57 @@
+name: main
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  plan-dev:
+    runs-on: ubuntu-latest
+    outputs:
+      plan-exit-code: "2"
+    steps:
+      - name: Exit
+        run: exit 0
+
+  plan-staging:
+    runs-on: ubuntu-latest
+    outputs:
+      plan-exit-code: "2"
+    steps:
+      - name: Exit
+        run: exit 0
+
+  plan-prod:
+    runs-on: ubuntu-latest
+    outputs:
+      plan-exit-code: "2"
+    steps:
+      - name: Exit
+        run: exit 0
+
+  apply-dev:
+    if: always() && github.ref == 'refs/heads/main' && needs.plan-dev.outputs.plan-exit-code == 2
+    needs: [plan-dev, plan-staging, plan-prod]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Exit
+        run: exit 0
+
+  apply-staging:
+    if: always() && github.ref == 'refs/heads/main' && needs.plan-staging.outputs.plan-exit-code == 2
+    needs: [plan-staging, apply-dev]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Exit
+        run: exit 0
+
+  apply-prod:
+    if: always() && github.ref == 'refs/heads/main' && needs.plan-prod.outputs.plan-exit-code == 2
+    needs: [plan-prod, apply-staging]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Exit
+        run: exit 0
